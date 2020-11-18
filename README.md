@@ -11,7 +11,7 @@ sass --watch input.scss:output.css //监听文件 之间用：
 sass --watch app/sass:public/stylesheets //监听文件夹的变化
 ```
 
-###### 1、嵌套
+> #### 1、嵌套
 
 
 ```
