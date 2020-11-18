@@ -32,7 +32,7 @@ sass --watch app/sass:public/stylesheets //监听文件夹的变化
     font-size: 16px;
 }
 ```
-###### 2、父选择器（&）
+> #### 2、父选择器（&）
 
 
 ```
@@ -61,7 +61,7 @@ sass --watch app/sass:public/stylesheets //监听文件夹的变化
 }
 ```
 
-###### 3、属性嵌套
+> #### 3、属性嵌套
 
 
 ```
@@ -80,7 +80,7 @@ sass --watch app/sass:public/stylesheets //监听文件夹的变化
 }
 ```
 
-###### 4、注释 /* */ 或者 //
+> #### 4、注释 /* */ 或者 //
 
 ```
 /* 注释
@@ -90,7 +90,7 @@ sass --watch app/sass:public/stylesheets //监听文件夹的变化
  
  // 注释
 ```
-###### 5、SassScript ——变量
+> #### 5、SassScript ——变量
 
 变量有块级作用域
 若需将局部作用域转为全局可以用—!global（不怎么建议使用）
@@ -108,7 +108,7 @@ $--color-primary: #67C23A;
 }
 ```
 
-###### 6、数据类型
+> #### 6、数据类型
 - 数字: 1, 2, 3, 10px
 - 颜色: red, #fff, rgba(255, 0, 0, 0.5)
 - 布尔: true, false
@@ -117,22 +117,22 @@ $--color-primary: #67C23A;
 - 数组
 - map
 
-###### 7、运算
+> #### 7、运算
 +, -, *, /, %, <, >, <=, >=, ==, !=
 
-###### 8、插值语句#{}
+> #### 8、插值语句#{}
 
-###### 9、变量定义 !default
+> #### 9、变量定义 !default
 
 优先级最低 可以被重新复制
 
-###### 10、@import导入
+> #### 10、@import导入
 
 分音，不想被编译，在实际文件前加_,引入时不加
 
 嵌套 
 
-###### 11、@media
+> #### 11、@media
 同css 一样，但是嵌套时编译会放在最外层
 
 ```
@@ -155,7 +155,7 @@ $--color-primary: #67C23A;
 }
 ```
 
-###### 12、 @extend 继承
+> #### 12、 @extend 继承
 
 
 ```
@@ -248,7 +248,7 @@ $--color-primary: #67C23A;
 }
 ```
 
-###### 13、@at-root
+> #### 13、@at-root
 
 解析后是在文档的根发出，而不是父选择器
 
@@ -296,15 +296,15 @@ $--color-primary: #67C23A;
 }
 ```
 
-###### 14、@debug
+> #### 14、@debug
 
 同js的debugger一样用于调试
 ```
 @debug 10em + 12em;
 ```
-###### 15、@warn
+> #### 15、@warn
 
-###### 16、@if 、 @else if、 @else
+> #### 16、@if 、 @else if、 @else
 当 @if 的表达式返回值不是 false 或者 null 时，条件成立，输出 {} 内的代码
 
 ```
@@ -327,8 +327,7 @@ p {
     color: green; 
 }
 ```
-
-###### 17、@each
+> #### 17、@each
 
 $var in <list>
 
@@ -385,7 +384,7 @@ h3 {
 }
 ```
 
-###### 18、@for
+> #### 18、@for
 
 - @for $var from <start> through <end>
 - @for $var from <start> to <end>
@@ -412,7 +411,7 @@ h3 {
 }
 ```
 
-###### 19、@while
+> #### 19、@while
 
 
 ```
@@ -436,7 +435,7 @@ $i: 6;
     width: 4em;
 }
 ```
-###### 20、@mixin和@include  混合样式
+> #### 20、@mixin和@include  混合样式
 
 
 ```
@@ -485,7 +484,7 @@ $namespace: "el";
 
 为便于书写，@mixin 可以用 = 表示，而 @include 可以用 + 表示
 
-###### @function
+> #### 21、@function
 
 
 ```
