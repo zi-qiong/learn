@@ -1,0 +1,149 @@
+.card {
+  padding: 8px;
+  border: 1px solid #333;
+}
+.card .card-title {
+  font-size: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #333;
+}
+.card .card-content {
+  padding-top: 8px;
+}
+
+.card {
+  color: red;
+}
+.card:hover {
+  color: #ffee00;
+}
+.card-active {
+  color: #00ff40;
+}
+
+.card {
+  border: 1px solid #333;
+  border-style: solid;
+  border-color: #333;
+}
+
+.card {
+  color: #67C23A;
+}
+
+p {
+  font: 10px/8px;
+  width: 1;
+}
+
+.foo.bar .baz.bang, .bip.qux {
+  color: red;
+}
+
+.sidebar {
+  width: 300px;
+}
+@media screen and (orientation: landscape) {
+  .sidebar {
+    width: 500px;
+  }
+}
+
+.error, .seriousError, .criticalError {
+  border: 1px #f00;
+  background-color: #fdd;
+}
+
+.error .intrusion, .seriousError .intrusion, .criticalError .intrusion {
+  background-image: url("/image/hacked.png");
+}
+
+.seriousError, .criticalError {
+  border-width: 3px;
+}
+
+.error, .seriousError, .criticalError {
+  border: 1px #f00;
+  background-color: #fdd;
+}
+.error a, .seriousError a, .criticalError a {
+  color: red;
+}
+
+.seriousError, .criticalError {
+  border-width: 3px;
+}
+
+.criticalError {
+  position: fixed;
+  top: 10%;
+  bottom: 10%;
+  left: 10%;
+  right: 10%;
+}
+
+#context a.notice {
+  color: blue;
+  font-weight: bold;
+  font-size: 2em;
+}
+
+.context {
+  font-size: 16px;
+}
+.name {
+  font-size: 14px;
+}
+
+@media print {
+  .page {
+    width: 8px;
+  }
+}
+.puma-icon {
+  background-image: url("/images/puma.png");
+  border: 2px solid black;
+  cursor: default;
+}
+
+.sea-slug-icon {
+  background-image: url("/images/sea-slug.png");
+  border: 2px solid blue;
+  cursor: pointer;
+}
+
+.egret-icon {
+  background-image: url("/images/egret.png");
+  border: 2px solid white;
+  cursor: move;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+h3 {
+  font-size: 1.2em;
+}
+
+.item-1 {
+  width: 2em;
+}
+
+.item-2 {
+  width: 4em;
+}
+
+.item-3 {
+  width: 6em;
+}
+
+#sidebar {
+  width: 240px;
+}
+
+/*# sourceMappingURL=index.css.map */

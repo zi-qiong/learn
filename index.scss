@@ -1,0 +1,189 @@
+.card {
+    padding: 8px;
+    border: 1px solid #333;
+
+    .card-title {
+        font-size: 16px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid #333;
+    }
+
+    .card-content {
+        padding-top: 8px;
+    }
+}
+
+.card {
+    color: red;
+
+    &:hover {
+        color: rgb(255, 238, 0);
+    }
+
+    &-active {
+        color: rgb(0, 255, 64);
+    }
+}
+
+.card {
+    border: 1px solid #333 {
+        //border后面用的：也可以跟自己的属性
+        style: solid;
+        color: #333;
+    }
+}
+
+$--color-primary: #67C23A;
+
+.card {
+    color: $--color-primary;
+}
+
+p {
+    font: 10px/8px; // Plain CSS, no division
+    width: round(1.5)/2; // Uses a function, does division
+}
+
+.foo.bar .baz.bang,
+.bip.qux {
+    $selector: &;
+
+    // & {
+    //     font-size: 14px;
+    // }
+    @at-root {
+        #{$selector} {
+            color: red
+        }
+    }
+
+}
+
+.sidebar {
+    width: 300px;
+
+    @media screen and (orientation: landscape) {
+        width: 500px;
+    }
+}
+
+.error {
+    border: 1px #f00;
+    background-color: #fdd;
+}
+
+.error .intrusion {
+    background-image: url("/image/hacked.png");
+}
+
+.seriousError {
+    @extend .error;
+    border-width: 3px;
+}
+
+.error {
+    border: 1px #f00;
+    background-color: #fdd;
+
+    a {
+        color: red;
+    }
+}
+
+.seriousError {
+    @extend .error;
+    border-width: 3px;
+}
+
+.criticalError {
+    @extend .seriousError;
+    position: fixed;
+    top: 10%;
+    bottom: 10%;
+    left: 10%;
+    right: 10%;
+}
+
+#context a%extreme {
+    color: blue;
+    font-weight: bold;
+    font-size: 2em;
+}
+
+.notice {
+    @extend %extreme;
+}
+
+.context {
+    font-size: 16px;
+
+    @at-root .name {
+        font-size: 14px;
+    }
+}
+
+a.important {
+    @extend .notice1 !optional;
+}
+
+@media print {
+    .page {
+        @debug 1px+2px;
+        width: 8px;
+    }
+}
+
+
+@each $animal,
+$color,
+$cursor in (puma, black, default),
+(sea-slug, blue, pointer),
+(egret, white, move) {
+    .#{$animal}-icon {
+        background-image: url('/images/#{$animal}.png');
+        border: 2px solid $color;
+        cursor: $cursor;
+    }
+}
+
+@each $header,
+$size in (h1: 2em, h2: 1.5em, h3: 1.2em) {
+    #{$header} {
+        font-size: $size;
+    }
+}
+
+@for $i from 1 through 3 {
+    .item-#{$i} {
+        width: 2em * $i;
+    }
+}
+
+$namespace: "el";
+
+// @mixin b($block: div) {
+//     $B: $namespace+'-'+$block !global;
+
+//     .#{$B} {
+//         @content;
+//     }
+// }
+
+// @include b(button) {
+//     color: red;
+// }
+
+// @include b() {
+//     color: red;
+// }
+
+$grid-width: 40px;
+$gutter-width: 10px;
+
+@function grid-width($n) {
+    @return $n * $grid-width+($n - 1) * $gutter-width;
+}
+
+#sidebar {
+    width: grid-width(5);
+}
