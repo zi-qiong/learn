@@ -1,8 +1,11 @@
+// 判断是否是函数
+
 const isFunction = fn => typeof fn === "function"
 
 class Promise {
     constructor(handle) {
         if (!isFunction(handle)) {
+            // 不是函数就抛出错误
             throw new Error("Promise must accept a function as a parameser")
         }
 

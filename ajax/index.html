@@ -5,6 +5,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
         <title>ajax</title>
     </head>
+    <!-- href用于建立当前页面与引用资源之间的关系（链接），
+        遇到href，页面会并行加载后续内容；eg：link、a
+        而src则会替换当前标签。eg：script，img
+        浏览器需要加载完毕src的内容才会继续往下走。 -->
     <script src="./index.js"></script>
     <body>
         <input type="text" onkeyup="handleClick(this.value)">
