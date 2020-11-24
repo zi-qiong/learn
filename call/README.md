@@ -1,3 +1,5 @@
+
+```
 let person = {
     name: "jack"
 }
@@ -77,6 +79,8 @@ function Person(name) {
 
 let p1 = new Person('jack')
 p1.sayName()
+```
+
 
 /* 总结
 * 三者都是用来改变函数的this指向
