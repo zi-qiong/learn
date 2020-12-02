@@ -10,11 +10,15 @@
         <input type="text" v-model="school.name" />
         <div>{{school.name}}</div>
         <div>{{school.age}}</div>
-        {{school.name}}
+        <!-- 如果数据不变化，视图就不会刷新 -->
+        {{getNewName}}
+        <!-- 我们在内部会匹配 {{}} -->
         <ul>
             <li>1</li>
             <li>2</li>
         </ul>
+        <button v-on:click="change">按钮</button>
+        <div v-html="message"></div>
     </div>
     <script src="./mvvm.js"></script>
     <script>
@@ -24,8 +28,19 @@
                 school: {
                     name: "Sicily",
                     age: 18
+                },
+                message: "<h1>欢迎大家</h1>"
+            },
+            computed: {
+                getNewName() {
+                    return this.school.name + "new name"
                 }
-            }
+            },
+            methods: {
+                change() {
+                    this.message = "小谢"
+                }
+            },
         })
     </script>
 </body>
