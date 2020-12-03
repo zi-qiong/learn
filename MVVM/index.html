@@ -11,7 +11,7 @@
         <div>{{school.name}}</div>
         <div>{{school.age}}</div>
         <!-- 如果数据不变化，视图就不会刷新 -->
-        {{getNewName}}
+        {{getNewName}} {{school.age}}
         <!-- 我们在内部会匹配 {{}} -->
         <ul>
             <li>1</li>
@@ -20,7 +20,8 @@
         <button v-on:click="change">按钮</button>
         <div v-html="message"></div>
     </div>
-    <script src="./mvvm.js"></script>
+    <!-- <script src="./mvvm.js"></script> -->
+    <script src="./index.js"></script>
     <script>
         let mvvm = new Vue({
             el: "#app",

@@ -4,6 +4,14 @@ import router from './router'
 import store from './store'
 import './registerServiceWorker'
 
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+Vue.use(ElementUI);
+
+import "@/assets/scss/public.scss";
+
+Vue.prototype.$eventBus = new Vue();
+
 Vue.config.productionTip = false
 
 new Vue({

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="./index.js"></script>
+    <script>
+        function showTop() {
+            var scrollTop = document.body.scrollTop || document.documentElement.scrollTop;
+            console.log("滚动条位置", scrollTop)
+        }
+        window.onscroll = throttle(showTop, 10000)
+    </script>
+</head>
+<body>
+    <div style="height: 1000px;">1</div>
+</body>
+</html>
