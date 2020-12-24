@@ -39,25 +39,7 @@ function mountElement(vnode, container, isSVG) {
     vnode.el = el
     if(data) {
         for(let key in data) {
-            switch(key) {
-                case 'style':
-                    for(let k in data.style) {
-                        el.style[k] = data.style[k]
-                    }
-                    break
-                case 'class':
-                    el.className = data[key]
-                    break
-                default:
-                    if(key[0] === 'o' && key[1] === 'n') {
-                        el.addEventListener(key.slice(2), data[key])
-                    }else if(domPropsRE.test(key)) {
-                        el[key] = data[key]
-                    } else  {
-                        el.setAttribute(key, data[key])
-                    }
-            }
-            
+            patchData(el, key, null, nextVNode)
         }
     }
 
@@ -124,15 +106,63 @@ function mountComponent(vnode, container, isSVG) {
     }
 }
 
+// 有状态组件
+// 自身的state变化触发主动更新
+// 父元素的props变化触发被动更新
 function mountStatefulComponent(vnode, container, isSVG) {
-    const instance = new vnode.tag()
-    instance.$vnode = instance.render()
-    mount(instance.$vnode, container, isSVG)
-    instance.$el = vnode.el = instance.$vnode.el
+    // 创建组件实例
+    const instance = (vnode.children = new vnode.tag())
+    instance._update = function() {
+        // 如果 instance._mounted 为真，说明组件已挂载，应该执行更新操作
+        if(instance._mounted) {
+            const prevVNode = instance.$vnode
+            const nextVNode = (instance.$vnode = instance.render())
+            patch(prevVNode, nextVNode, prevVNode.el.parentNode)
+            instance.$el = vnode.el = instance.$vnode.el
+        } else {
+            instance.$vnode = instance.render()
+            mount(instance.$vnode, container, isSVG)
+            instance._mounted = true
+            instance.$el = vnode.el = instance.$vnode.el
+            instance.mounted && instance.mounted()
+        }
+    }
+    instance._update()
 }
 
 function mountFunctionalComponent(vnode, container, isSVG) {
     const $vnode = vnode.tag()
     mount($vnode, container, isSVG)
     vnode.el = $vnode.el
+}
+
+function patchData(el, key, prevValue, nextValue) {
+    switch(key) {
+        case 'style':
+            for(let k in nextValue) {
+                el.style[k] = nextValue[k]
+            }
+            for(let k in prevValue) {
+                if (!nextValue.hasOwnProperty(k)) {
+                    el.style[k] = ''
+                }
+            }
+            break
+        case 'class':
+            el.className = nextValue
+        default: 
+            if(key[0] === 'o' && key[1] === 'n') {
+                if(prevValue) {
+                    el.removeEventListener(key.slice(2), prevValue)
+                }
+                if(nextValue) {
+                    el.addEventListener(key.slice(2), nextValue)
+                }
+            } else if(domPropsRE.test(key)) {
+                el[key] = nextValue
+            } else {
+                el.setAttribute(key, nextValue)
+            }
+            break
+    }
 }

@@ -57,7 +57,17 @@ export default {
         msg: "父元素",
     },
     components: { Child1, Child2 },
+    beforeCreate() {
+        console.log('beforeCreate1')
+    },
+    created() {
+        console.log('created1')
+    },
+    beforeMount() {
+        console.log('beforeMount1')
+    },
     mounted() {
+        console.log('mounted1')
         this.$eventBus.$on("getRef", this.getRef);
         // EventBus.$off('addition', {}) 移除事件监听
         console.log(this.$children[0].name);

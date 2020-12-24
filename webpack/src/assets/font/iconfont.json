@@ -1,0 +1,30 @@
+{
+  "id": "1613693",
+  "name": "wyyx",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "1164676",
+      "name": "money",
+      "font_class": "money",
+      "unicode": "e70f",
+      "unicode_decimal": 59151
+    },
+    {
+      "icon_id": "1189038",
+      "name": "safe",
+      "font_class": "anquanwancheng",
+      "unicode": "e628",
+      "unicode_decimal": 58920
+    },
+    {
+      "icon_id": "3282850",
+      "name": "网易",
+      "font_class": "wangyi",
+      "unicode": "e63b",
+      "unicode_decimal": 58939
+    }
+  ]
+}

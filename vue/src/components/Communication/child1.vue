@@ -27,7 +27,17 @@ export default {
         }
     },
     components: {Child11, Child12},
+    beforeCreate () {
+        console.log('beforeCreate2')
+    },
+    created() {
+        console.log('created2')
+    },
+    beforeMount() {
+        console.log('beforeMount2')
+    },
     mounted() {
+        console.log('mounted2')
         console.log(this.$parent.articleList, 'parent')
     },
     methods: {

@@ -45,25 +45,46 @@
 
 // render(elementVnode, document.getElementById('app'))
 
-class MyComponent {
-  render() {
-    return h(
-      'div',
-      {
-        style: {
-          background: 'green'
-        }
-      },
-      [
-        h('span', null, '我是组件的标题1......'),
-        h('span', null, '我是组件的标题2......')
-      ]
-    )
+// class MyComponent {
+//   render() {
+//     return h(
+//       'div',
+//       {
+//         style: {
+//           background: 'green'
+//         }
+//       },
+//       [
+//         h('span', null, '我是组件的标题1......'),
+//         h('span', null, '我是组件的标题2......')
+//       ]
+//     )
+//   }
+// }
+
+// // h 函数的第一个参数是组件类
+// const compVnode = h(MyComponent)
+// console.log(compVnode)
+// render(compVnode, document.getElementById('app'))
+
+
+const prevVNode = h('div', {
+  style: {
+    width: '100px',
+    height: '100px',
+    backgroundColor: 'red'
   }
-}
+})
 
-// h 函数的第一个参数是组件类
-const compVnode = h(MyComponent)
-console.log(compVnode)
-render(compVnode, document.getElementById('app'))
+// 新的 VNode
+const nextVNode = h('div', {
+  style: {
+    width: '100px',
+    height: '100px',
+    border: '1px solid green'
+  }
+})
 
+// 先后渲染新旧 VNode 到 #app
+render(prevVNode, document.getElementById('app'))
+render(nextVNode, document.getElementById('app'))

@@ -1,3 +1,8 @@
 {
-  "extends": "umi"
+  "extends": "umi",
+  "rules": {
+    "no-undef": "off",
+    "no-restricted-globals": "off",
+    "no-unused-vars": "off"
+  }
 }

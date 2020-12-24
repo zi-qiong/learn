@@ -120,6 +120,7 @@ class IndexPage extends React.Component {
 		let value = e.target.value
 		if (!value) {
 			message.info('input框不能为空');
+			return
 		}
 		let treeData = this.state.treeData
 		let newData = this.submitNode(treeData, key, value)
