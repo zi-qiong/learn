@@ -8,7 +8,7 @@
 */
 
 // resolve用来拼接绝对路径的方法
-const { resolve } =  require('path')
+const { resolve } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 
@@ -29,12 +29,12 @@ module.exports = {
             // 详细loader配置, 不同文件必须匹配不同loader
             {
                 // 匹配哪些文件
-                test: /\.css$/, 
+                test: /\.css$/,
                 // 使用哪些loader进行处理,use数组中loader执行顺序，从右到左，从下到上依次执行
                 // style-loader:创建style标签，将js中的样式资源插入到head中生效
                 // css-loader:将css文件变成commonjs模块加载js中，里面内容是样式字符串
                 use: ['style-loader', 'css-loader']
-            }, 
+            },
             {
                 test: /\.less$/,
                 // less-loader将less文件编译成css文件,需要下载less和less-loader
@@ -76,6 +76,63 @@ module.exports = {
                     name: '[hash:10].[ext]',
                     outputPath: 'media'
                 }
+            },
+            /*
+            语法检测：eslint eslint-loader
+            注意：只检查自己的源代码，第三方的不用检查
+
+            设置检查规则：
+            "eslintConfig": {
+                "extends": "airbnb-base"
+            }
+
+            airbnb: eslint-config-airbnb-base eslint-plugin-import
+            */
+            // {
+            //     test: /\.js$/,
+            //     exclude: /node_modules/,
+            //     loader: 'eslint-loader',
+            //     options: {
+            //         // 自动修复eslint的错误
+            //         fix: true
+            //     }
+            // },
+            /*
+            js兼容性处理：babel-loader @babel/core @babel/preset-env
+            1、基本js兼容性处理 --> @babel/preset-env
+            问题：只能转换基本语法，如promise不能转换
+            2、全部js兼容性处理 --> @babel/polyfill
+            问题：我只需要解决部分兼容性处理，但是将所有的兼容性代码都全部引入，体积太大
+            3、需要做兼容性处理的就做：按需加载 --> core-js
+
+            2和3不可以同时使用
+            */
+            {
+                test: /\.js$/,
+                exclude: /node_modules/,
+                loader: 'babel-loader',
+                options: {
+                    // 预设：指示babel做怎样的兼容性处理
+                    presets: [[
+                        '@babel/preset-env',
+                        {
+                            // 按需加载
+                            useBuiltIns: 'usage',
+                            // 指定core-js版本
+                            corejs: {
+                                version: 3
+                            },
+                            // 指定兼容性做到哪个版本的浏览器
+                            targets: {
+                                chrome: '60',
+                                firefox: '60',
+                                ie: '9',
+                                safari: '10',
+                                edge: '17'
+                            }
+                        }
+                    ]]
+                }
             }
         ]
     },
@@ -87,11 +144,17 @@ module.exports = {
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             // 复制'./src/index.html'文件，并自动引入打包输出的所有资源
-            template: './src/index.html'
+            template: './src/index.html',
+            minify: {
+                // 移除空格
+                collapseWhitespace: true,
+                // 移除注释
+                removeComments: true
+            }
         })
     ],
     // 模式
-    mode: 'development', // 'production' 开发和生产环境
+    mode: 'development', // 'development'和'production' 开发和生产环境，生产环境会自动压缩js代码
     // 开发服务器 devServer:用来自动化（自动编译，自动打开浏览器，自动刷新浏览器）
     // 特点：只会在内存中编译打包，不会有任何输出
     // 启动devServer指令为：npx webpack-dev-server
