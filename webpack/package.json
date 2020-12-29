@@ -22,12 +22,32 @@
     "less": "^4.0.0",
     "less-loader": "^7.1.0",
     "style-loader": "^2.0.0",
+    "thread-loader": "^3.0.1",
     "url-loader": "^4.1.1",
     "webpack": "^4.44.2",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.0",
+    "workbox-webpack-plugin": "^6.0.2"
+  },
+  "browserslist": {
+      "development": [
+          "last 1 chrome version",
+          "last 1 firefox version",
+          "last 1 safari version"
+      ],
+      "production": [
+          ">0.2%",
+          "not dead",
+          "not op_mini all"
+      ]
   },
   "eslintConfig": {
-    "extends": "airbnb-base"
+    "extends": "airbnb-base",
+    "env": {
+      "broeser": true
+    }
+  },
+  "dependencies": {
+    "jQuery": "^1.7.4"
   }
 }

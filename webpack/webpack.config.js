@@ -7,15 +7,28 @@
     2、plugind: 1、下载 2、引入 3、使用
 */
 
+/* HMR: hot module replacement 热模块替换
+    作用：一个模块发生变化，只会重新打包这一个模块，而不是打包所有，
+    极大提升构建速度
+
+    样式文件：可以使用HMR功能，因为style-loader内部实现了
+    js文件：默认是没有HMR功能的--> 修改js代码，添加支持HMR功能的代码
+        注意：HMR功能对js的处理，只能处理非入口js文件的其他文件
+    html文件：默认是没有HMR功能的，同事会导致问题：html文件不能热更新了~
+    解决：修改entry入口，将html文件引入（不用做HMR功能）
+ */
+
 // resolve用来拼接绝对路径的方法
 const { resolve } = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
+const workboxWebpackPlugin = require('workbox-webpack-plugin')
+// const webpack = require("webpack")
 
 module.exports = {
     // webpack配置
     // 入口起点
-    entry: "./src/index.js",
+    entry: ["./src/index.js", "./src/index.html"],
     // 输出
     output: {
         // 输出的文件名
@@ -87,6 +100,12 @@ module.exports = {
             }
 
             airbnb: eslint-config-airbnb-base eslint-plugin-import
+
+            eslint不认识window，navigator全局变量，
+            解决：需要修改package.json中eslintConfig配置
+            "env": {
+                "browser": true //支持浏览器全局变量
+            }
             */
             // {
             //     test: /\.js$/,
@@ -110,29 +129,44 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                loader: 'babel-loader',
-                options: {
-                    // 预设：指示babel做怎样的兼容性处理
-                    presets: [[
-                        '@babel/preset-env',
-                        {
-                            // 按需加载
-                            useBuiltIns: 'usage',
-                            // 指定core-js版本
-                            corejs: {
-                                version: 3
-                            },
-                            // 指定兼容性做到哪个版本的浏览器
-                            targets: {
-                                chrome: '60',
-                                firefox: '60',
-                                ie: '9',
-                                safari: '10',
-                                edge: '17'
-                            }
+                use: [
+                    /* 开启多进程打包 thread-loader
+                        进程启动大概为600ms,进程通信也有开销。
+                        只有工作消耗时间比较长，才需要多进程打包
+                     */
+                    // 'thread-loader',
+                    // {
+                    //     loader: 'thread-loader',
+                    //     options: {
+                    //         workers: 2 // 进程2个
+                    //     }
+                    // },
+                    {
+                        loader: 'babel-loader',
+                        options: {
+                            // 预设：指示babel做怎样的兼容性处理
+                            presets: [[
+                                '@babel/preset-env',
+                                {
+                                    // 按需加载
+                                    useBuiltIns: 'usage',
+                                    // 指定core-js版本
+                                    corejs: {
+                                        version: 3
+                                    },
+                                    // 指定兼容性做到哪个版本的浏览器
+                                    targets: {
+                                        chrome: '60',
+                                        firefox: '60',
+                                        ie: '9',
+                                        safari: '10',
+                                        edge: '17'
+                                    }
+                                }
+                            ]]
                         }
-                    ]]
-                }
+                    }
+                ]
             }
         ]
     },
@@ -142,6 +176,14 @@ module.exports = {
         // 功能：默认会创建一个空的html文件，引入打包输出的所有资源（js/css）
         // 需求：需要有结构的HTM文件
         new CleanWebpackPlugin(),
+        // 告诉webpack哪些库不参与打包，同事使用时的名称也得变~
+        // new webpack.DllReferencePlugin({
+        //     manifest: resolve(__dirname, 'dll/manifest.json')
+        // }),
+        // 将某个文件打包输出去，并在html中自动引入该资源
+        // new AddAssetHtmlWebpackPlugin({
+        //     filePath: resolve(__dirname, 'dll/jquery.js')
+        // }),
         new HtmlWebpackPlugin({
             // 复制'./src/index.html'文件，并自动引入打包输出的所有资源
             template: './src/index.html',
@@ -151,6 +193,15 @@ module.exports = {
                 // 移除注释
                 removeComments: true
             }
+        }),
+        new workboxWebpackPlugin.GenerateSW({
+            /* 1、帮助serviceWorker快速启动
+                2、删除旧的serviceWorker
+
+                生成一个serviceWorker配置文件
+             */
+            clientsClaim: true,
+            skipWaiting: true
         })
     ],
     // 模式
@@ -166,8 +217,40 @@ module.exports = {
         // 端口号
         port: 3000,
         // 自动打开浏览器
-        open: true
+        open: true,
+        // 开启HMR功能
+        // 当修改了webpack配置，新配合要想生效，必须重启生效
+        hot: true
+    },
+    devtool: 'source-map',
+    externals: {
+        // 忽略的库名---npm包名
+        // 拒绝jquery被打包进来
+        jquery: 'jQuery'
     }
 }
 
 // 开发环境的配置：能让代码运行
+
+/*
+    source-map: 一种提供源代码到构建后代映射技术（如果构建后代码出错了，通过映射关系可以追踪源代码错误）
+    [inline-|hidden-|eval-][nosources-][cheap-[module-]]source-map
+    inline-source-map: 内联（只生成一个内联source-map）
+    hidden-source-map: 外部
+    eval-source-map: 内联（每个文件都生成一个source-map，都在eval）
+    内联和外部的区别：1、外部生成了文件，内联没有 2、内联构建速度更快
+
+    开发环境：eval-source-map
+    生产环境： source-map
+ */
+
+/*
+   pwa:渐进式网络开发应用程序（离线可访问）
+   workbox --> workbox-webpack-plugin
+
+   sw必须运行在服务器上
+   --> nodejs
+   --> npm i serve -g
+   serve -s build //启动服务器，将build目录下所有资源作为静态资源暴露出去
+ */
+
