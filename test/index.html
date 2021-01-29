@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script type="text/javascript" src="https://webapi.amap.com/maps?v=1.4.10&key=37cad53ccc42dd43c87e38c849f8f545"></script> 
+</head>
+<style>
+    #map-div {
+        height: 500px;
+    }
+</style>
+<body>
+    <div id="map-div"></div>
+    <script>
+        let _this = this
+        let mapDiv = document.getElementById('map-div')
+        let map = new window.AMap.Map(mapDiv,{
+            resizeEnable:true,
+            zoom: 10,
+            // zooms:[3,20],
+            center: [116.397428, 39.90923],
+            // scrollWheel: false,
+            mapStyle: "amap://styles/whitesmoke"
+        })
+        var positions = [[116.397428, 39.90923], [116.415467, 39.907761], [116.415467, 39.917761], [116.425467, 39.907761],
+        [116.385467, 39.907761]];
+        for (var i = 0, marker; i < positions.length; i++) {
+            marker = new AMap.Marker({
+                position: positions[i],
+                // icon: '//a.amap.com/jsapi_demos/static/demo-center/icons/poi-marker-default.png',
+                offset: new AMap.Pixel(-13, -30)
+            });
+            map.add(marker);
+        }
+    </script>
+</body>
+</html>
