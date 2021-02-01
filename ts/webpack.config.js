@@ -1,6 +1,5 @@
 const { resolve } = require("path") 
 const HtmlWebpackPlugin = require("html-webpack-plugin")
-// const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: "./src/index.ts",
@@ -45,7 +44,6 @@ module.exports = {
         }]
     },
     plugins: [
-        // new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
             template: './index.html',
             minify: {
@@ -57,5 +55,12 @@ module.exports = {
     mode: "development",
     resolve: {
         extensions: ['.ts', '.js']
+    },
+    devServer: {
+        contentBase: resolve(__dirname, 'dist'),
+        compress: true,
+        port: 3000,
+        hot: true,
+        open: true
     }
 }
