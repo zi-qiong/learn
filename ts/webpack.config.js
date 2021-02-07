@@ -1,7 +1,9 @@
 const { resolve } = require("path") 
 const HtmlWebpackPlugin = require("html-webpack-plugin")
+const SpeedMeasurePlugin = require("speed-measure-webpack-plugin");
+const smp = new SpeedMeasurePlugin();
 
-module.exports = {
+module.exports = smp.wrap({
     entry: "./src/index.ts",
     output: {
         path: resolve(__dirname, 'dist'),
@@ -25,7 +27,7 @@ module.exports = {
                             "@babel/preset-env",
                             {
                                 targets: {
-                                    chrome: '60',
+                                    chrome: '58',
                                     firefox: '60',
                                     ie: '9',
                                     safari: '10',
@@ -54,7 +56,10 @@ module.exports = {
     ],
     mode: "development",
     resolve: {
-        extensions: ['.ts', '.js']
+        extensions: ['.ts', '.js'],
+        alias: {
+            '@': resolve(__dirname, 'src')
+        }
     },
     devServer: {
         contentBase: resolve(__dirname, 'dist'),
@@ -63,4 +68,4 @@ module.exports = {
         hot: true,
         open: true
     }
-}
+})
